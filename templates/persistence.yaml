@@ -4,6 +4,7 @@ kind: PersistentVolume
 metadata:
   name: {{ include "hivemq-ce-helm.fullname" . }}-conf-pv
   labels:
+    name: {{ include "hivemq-ce-helm.fullname" . }}-conf-pv
 {{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
   nfs:
@@ -38,6 +39,7 @@ kind: PersistentVolume
 metadata:
   name: {{ include "hivemq-ce-helm.fullname" . }}-extensions-pv
   labels:
+    name: {{ include "hivemq-ce-helm.fullname" . }}-extensions-pv
 {{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
   nfs:
