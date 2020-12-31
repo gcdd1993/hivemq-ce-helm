@@ -7,7 +7,7 @@ metadata:
   {{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
   nfs:
-  {{- toYaml .Values.pv.nfs | nindent 6 }}
+  {{- toYaml .Values.nfs | indent 6 }}
   accessModes:
     - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain

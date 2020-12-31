@@ -69,7 +69,6 @@ tolerations: [ ]
 
 affinity: { }
 
-pv:
-  nfs:
-    path: /data/nfs_share/hivemq/extensions/
-    server: 192.168.0.104
+nfs:
+  path: /data/nfs_share/hivemq/extensions/
+  server: 192.168.0.104
