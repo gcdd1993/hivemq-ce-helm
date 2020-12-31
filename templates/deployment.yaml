@@ -1,3 +1,4 @@
+# @formatter:off
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,42 +17,50 @@ spec:
         app.kubernetes.io/name: {{ include "hivemq-ce-helm.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-      {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
       serviceAccountName: {{ template "hivemq-ce-helm.serviceAccountName" . }}
       securityContext:
-      {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
-          {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort:  {{ .Values.service.port }}
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 2
+            successThreshold: 2
+            timeoutSeconds: 30
+            tcpSocket:
+              port: {{ .Values.service.port }}
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 2
+            successThreshold: 2
+            timeoutSeconds: 30
+            tcpSocket:
+              port: {{ .Values.service.port }}
           resources:
-      {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+    {{- with .Values.affinity }}
       affinity:
-      {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
       tolerations:
-  {{- toYaml . | nindent 8 }}
-  {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

@@ -1,3 +1,4 @@
+# @formatter:off
 apiVersion: v1
 kind: Service
 metadata:
@@ -8,9 +9,9 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: {{ .Values.service.nodePort }}
       protocol: TCP
-      name: http
+      name: hivemq-mqtt
   selector:
     app.kubernetes.io/name: {{ include "hivemq-ce-helm.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
