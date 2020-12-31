@@ -9,9 +9,12 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.nodePort }}
+      targetPort: http
       protocol: TCP
       name: hivemq-mqtt
+      {{- if eq .Values.service.type "NodePort" }}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
   selector:
     app.kubernetes.io/name: {{ include "hivemq-ce-helm.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
