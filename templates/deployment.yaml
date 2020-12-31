@@ -42,6 +42,13 @@ spec:
               port: {{ .Values.service.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: conf
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.claimName.conf }}-pvc
+        - name: extensions
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.claimName.extensions }}-pvc
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
