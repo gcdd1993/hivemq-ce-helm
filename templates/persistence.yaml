@@ -4,7 +4,7 @@ kind: PersistentVolume
 metadata:
   name: {{ .Values.persistence.claimName.conf }}-pv
   labels:
-    name: {{ .Values.persistence.claimName.conf }}-pv
+{{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
   nfs:
     path: {{ .Values.persistence.path }}/conf/
@@ -20,6 +20,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.persistence.claimName.conf }}-pvc
+  labels:
+{{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -36,7 +38,7 @@ kind: PersistentVolume
 metadata:
   name: {{ .Values.persistence.claimName.extensions }}-pv
   labels:
-    name: {{ .Values.persistence.claimName.extensions }}-pv
+{{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
   nfs:
     path: {{ .Values.persistence.path }}/conf/
@@ -52,6 +54,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.persistence.claimName.extensions }}-pvc
+  labels:
+{{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
   accessModes:
     - ReadWriteOnce
