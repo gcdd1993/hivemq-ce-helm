@@ -45,10 +45,10 @@ spec:
       volumes:
         - name: conf
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.claimName.conf }}-pvc
+            claimName: {{ include "hivemq-ce-helm.fullname" . }}-conf-pvc
         - name: extensions
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.claimName.extensions }}-pvc
+            claimName: {{ include "hivemq-ce-helm.fullname" . }}-extensions-pvc
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

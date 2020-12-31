@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.persistence.claimName.conf }}-pv
+  name: {{ include "hivemq-ce-helm.fullname" . }}-conf-pv
   labels:
 {{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
@@ -19,7 +19,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.persistence.claimName.conf }}-pvc
+  name: {{ include "hivemq-ce-helm.fullname" . }}-conf-pvc
   labels:
 {{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
@@ -31,12 +31,12 @@ spec:
       storage: 1Gi
   selector:
     matchLabels:
-      name: {{ .Values.persistence.claimName.conf }}-pv
+      name: {{ include "hivemq-ce-helm.fullname" . }}-conf-pv
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.persistence.claimName.extensions }}-pv
+  name: {{ include "hivemq-ce-helm.fullname" . }}-extensions-pv
   labels:
 {{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
@@ -53,7 +53,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.persistence.claimName.extensions }}-pvc
+  name: {{ include "hivemq-ce-helm.fullname" . }}-extensions-pvc
   labels:
 {{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
@@ -65,4 +65,4 @@ spec:
       storage: 1Gi
   selector:
     matchLabels:
-      name: {{ .Values.persistence.claimName.extensions }}-pv
+      name: {{ include "hivemq-ce-helm.fullname" . }}-extensions-pv

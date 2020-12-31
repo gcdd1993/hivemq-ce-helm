@@ -70,8 +70,5 @@ tolerations: [ ]
 affinity: { }
 
 persistence:
-  path:
-  server:
-  claimName:
-    extensions: hivemq-extensions
-    conf: hivemq-conf
+  path: /data/nfs_share/hivemq
+  server: 192.168.3.123
