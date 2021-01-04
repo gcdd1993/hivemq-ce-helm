@@ -44,7 +44,7 @@ metadata:
 {{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
   nfs:
-    path: {{ .Values.persistence.path }}/conf/
+    path: {{ .Values.persistence.path }}/extensions/
     server: {{ .Values.persistence.server }}
   accessModes:
     - ReadWriteOnce
