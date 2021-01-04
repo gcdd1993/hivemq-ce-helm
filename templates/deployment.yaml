@@ -34,6 +34,11 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/hivemq/conf
+              name: conf
+            - mountPath: /opt/hivemq/extensions
+              name: extensions
           livenessProbe:
             tcpSocket:
               port: {{ .Values.service.port }}
