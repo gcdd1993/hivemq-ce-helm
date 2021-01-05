@@ -13,9 +13,8 @@ image:
   repository: hivemq-ce-spring
   tag: 2020.6
   pullPolicy: IfNotPresent
-
-imagePullSecrets:
-  - *pull-secret
+  pullSecrets:
+    - *pull-secret
 nameOverride: "hivemq-ce-spring"
 fullnameOverride: "hivemq-ce-spring"
 

@@ -18,9 +18,11 @@ spec:
         app.kubernetes.io/name: {{ include "hivemq-ce-helm.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-    {{- with .Values.imagePullSecrets }}
+    {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end}}
     {{- end }}
       serviceAccountName: {{ template "hivemq-ce-helm.serviceAccountName" . }}
       securityContext:
