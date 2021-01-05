@@ -18,12 +18,6 @@ spec:
         app.kubernetes.io/name: {{ include "hivemq-ce-helm.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-    {{- if .Values.image.pullSecrets }}
-      imagePullSecrets:
-      {{- range .Values.image.pullSecrets }}
-        - name: {{ . }}
-      {{- end}}
-    {{- end }}
       serviceAccountName: {{ template "hivemq-ce-helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -51,6 +45,12 @@ spec:
               value: {{ required "please specify the bootstrap servers for kafka" .Values.hivemq.kafka.bootstrap.servers }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+        {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+        {{- end}}
+      {{- end }}
       volumes:
         - name: datadir
           emptyDir: {}

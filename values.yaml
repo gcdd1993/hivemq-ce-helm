@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 global:
-  privateRegistry: &private-registry "registry.cn-shanghai.aliyuncs.com"
+  privateRegistry: &private-registry "registry.cn-shanghai.aliyuncs.com/halmawork"
   pullSecret: &pull-secret "aliyun"
 
 replicaCount: 1
@@ -78,3 +78,5 @@ hivemq:
   kafka:
     bootstrap:
       servers: {}
+
+## hivemq.kafka.bootstrap.servers=192.168.3.123:9092
