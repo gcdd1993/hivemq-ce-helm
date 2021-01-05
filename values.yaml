@@ -2,16 +2,20 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  privateRegistry: &private-registry registry.cn-shanghai.aliyuncs.com
+
 replicaCount: 1
 
 image:
-  repository: hivemq/hivemq-ce
-  tag: latest
+  registry: *private-registry
+  repository: hivemq-ce-spring
+  tag: 2020.6
   pullPolicy: IfNotPresent
 
 imagePullSecrets: [ ]
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "hivemq-ce-spring"
+fullnameOverride: "hivemq-ce-spring"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -35,7 +39,7 @@ service:
   #  type: ClusterIP
   type: NodePort
   port: 1883
-  nodePort: 11883 # 暴露的服务端口
+  nodePort: 31883 # 暴露的服务端口
 
 ingress:
   enabled: false
@@ -69,6 +73,7 @@ tolerations: [ ]
 
 affinity: { }
 
-persistence:
-  path:
-  server:
+hivemq:
+  kafka:
+    bootstrap:
+      servers: {}

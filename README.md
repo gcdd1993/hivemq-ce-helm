@@ -26,6 +26,4 @@ $ helm install my-hivemq gcdd1993/hivemq-ce-helm
 | service.port       | Kubernetes Service port                                      | 1883                       |
 | service.nodePort   | Kubernetes Service nodePort                                  | 11883                      |
 | resources          | HiveMQ CPU/Memory resource requests/limits                   | Memory: `2Gi`, CPU: `500m` |
-| persistence.path   | path to store hivemq conf & extensions                       | nil                        |
-| persistence.server | nfs server for hivemq store                                  | nil                        |
 

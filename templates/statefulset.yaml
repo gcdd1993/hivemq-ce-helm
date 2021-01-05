@@ -1,11 +1,12 @@
 # @formatter:off
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "hivemq-ce-helm.fullname" . }}
   labels:
 {{ include "hivemq-ce-helm.labels" . | indent 4 }}
 spec:
+  serviceName: {{ include "hivemq-ce-helm.name" . }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -28,32 +29,29 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           volumeMounts:
-            - mountPath: /opt/hivemq/conf
-              name: conf
-            - mountPath: /opt/hivemq/extensions
-              name: extensions
+            - name: datadir
+              mountPath: /app/hivemq
           livenessProbe:
             tcpSocket:
               port: {{ .Values.service.port }}
           readinessProbe:
             tcpSocket:
               port: {{ .Values.service.port }}
+          env:
+            - name: ENV_KAFKA_BOOTSTRAP_SERVERS
+              value: {{ required "please specify the bootstrap servers for kafka" .Values.hivemq.kafka.bootstrap.servers }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-        - name: conf
-          persistentVolumeClaim:
-            claimName: {{ include "hivemq-ce-helm.fullname" . }}-conf-pvc
-        - name: extensions
-          persistentVolumeClaim:
-            claimName: {{ include "hivemq-ce-helm.fullname" . }}-extensions-pvc
+        - name: datadir
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
