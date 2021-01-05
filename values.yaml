@@ -3,7 +3,8 @@
 # Declare variables to be passed into your templates.
 
 global:
-  privateRegistry: &private-registry registry.cn-shanghai.aliyuncs.com
+  privateRegistry: &private-registry "registry.cn-shanghai.aliyuncs.com"
+  pullSecret: &pull-secret "aliyun"
 
 replicaCount: 1
 
@@ -13,7 +14,8 @@ image:
   tag: 2020.6
   pullPolicy: IfNotPresent
 
-imagePullSecrets: [ ]
+imagePullSecrets:
+  - *pull-secret
 nameOverride: "hivemq-ce-spring"
 fullnameOverride: "hivemq-ce-spring"
 
