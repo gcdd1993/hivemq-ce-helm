@@ -12,7 +12,7 @@ image:
   registry: *private-registry
   repository: hivemq-ce-spring
   tag: 2020.6
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   pullSecrets:
     - *pull-secret
 nameOverride: "hivemq-ce-spring"
@@ -80,3 +80,4 @@ hivemq:
       servers: {}
 
 ## hivemq.kafka.bootstrap.servers=192.168.3.123:9092
+
